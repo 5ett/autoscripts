@@ -2,8 +2,8 @@ import os
 import glob
 import shutil
 import secrets
-import schedule
-import time
+#import schedule
+#import time
 
 rand = secrets.token_hex(3)
 vid_rand = secrets.token_hex(1)
