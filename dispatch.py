@@ -10,6 +10,7 @@ vid_rand = secrets.token_hex(1)
 
 a= os.getcwd()
 for file in os.listdir(a):
+        #for images
 	if file in glob.glob("*.jpg") or file in glob.glob("*.png") or file in glob.glob("*.jpeg"):
 		*_, ext = os.path.splitext(file)
 		nuname_img = rand + ext
@@ -18,7 +19,8 @@ for file in os.listdir(a):
 		except:
 			os.rename(file,nuname_img)
 			shutil.move(file, "/storage/emulated/0/Pictures/feom_downloads")
-			
+	
+        #for docs		
 	elif file in glob.glob("*.pdf") or file in glob.glob("*.docx"):
 		_, ext = os.path.splitext(file)
 		nuname_pdf = _+ rand + ext
@@ -30,7 +32,8 @@ for file in os.listdir(a):
 		except:
 			os.rename(file, nuname_pdf)
 			shutil.move(file, "/storage/emulated/0/Download/for_pdf")
-			
+
+	#for videos		
 	elif file in glob.glob("*.mp4") or file in glob.glob("*.mkv"):
 		_, ext = os.path.splitext(file)
 		nuname_vid = _ + vid_rand + ext
