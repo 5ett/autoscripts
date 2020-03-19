@@ -1,5 +1,6 @@
 import pandas as pd
 import csv
+import os
 import html5lib
 import requests 
 from datetime import datetime
@@ -7,39 +8,70 @@ from bs4 import BeautifulSoup as bs
 
 data_src = requests.get('https://worldometers.info/coronavirus').text
 
+wrk_dir = os.getcwd()
+
 parsed_data = bs(data_src, 'html5lib')
-
-potlist = []
-potlist2 = []
-potlist3 = []
-pot_percent = []
-
 date = datetime.utcnow().date
+time = datetime.utcnow().time
 
-
-with open('covid-19_total.csv', 'w') as cvd:
+#overview data csv data
+if 'covid-19_total.csv' in os.listdir(wrk_dir):
+	cvd = open('covid-19_total.csv', 'a')
+	cvdsv = csv.writer(cvd)
+else:
+	cvd = open('covid-19_total.csv', 'w')
 	cvdsv = csv.writer(cvd)
 	cvdsv.writerow(['DATE', 'TOTAL CASES', 'DEATH', 'RECOVERIES'])
 	counters = parsed_data.find('div', class_='content-inner')
-	for pot in counters.find_all('div', class_='maincounter-number'):
-		potlist.append(pot.text)	
-	total, death, recov = potlist
-	cvdsv.writerow([ date, total, death, recov])
 	
-		
-with open('covid-19_deatiled.csv', 'w') as cvdd:
+#detailed data csv file
+if 'covid-19_detailed.csv' in os.listdir(wrk_dir):		
+	cvdd = open('covid-19_deatiled.csv', 'a')
+	cvddsv = csv.writer(cvdd)
+else:
+	cvdd = open('covid-19_deatiled.csv', 'w')
 	cvddsv = csv.writer(cvdd)
 	cvddsv.writerow([" ", " "," ",'ACTIVE CASES', " ", " ", " ", " ", 'CLOSED CASES'])
 	cvddsv.writerow(['DATE','TOTAL', 'MILD CASES','%', 'CRITICAL CASES','%','TOTAL', 'RECOVERIES', '%', 'DEATHS', '%'])
-	for pot2 in counters.find_all('div', class_='number-table-main'):
-		potlist2.append(pot2.text)
+
 		
-	for pot3 in counters.find_all('span', class_='number-table'):
-		potlist3.append(pot3.text)
+potlist = []
+for pot in counters.find_all('div', class_='maincounter-number'):
+	potlist.append(pot.text)	
+	total, death, recov = potlist
+	cvdsv.writerow([ f'{date} - {time}', total, death, recov])
 		
-	total1, total2 = potlist2
-	mild, crit, recovv, deathh = potlist3
-	cvddsv.writerow([date, total1, mild," ", crit," ", total2, recovv," ", deathh, " "])	
+
+potlist2 = []						
+for pot2 in counters.find_all('div', class_='number-table-main'):
+	hund, thou = pot2.text.split(',')
+	resulting_int = hund + thou
+	int_set.append(resulting_int)
+	potlist2.append(pot2.text)
+		
+
+potlist3 = []
+int_set = []
+pot_percent = []				
+for pot3 in counters.find_all('span', class_='number-table'):
+	potlist3.append(pot3.text)
+	hund_, thou_ = pot3.text.splir(',')
+	res_int = hund_ + thou_
+	int_set.append(res_int)
+	
+	
+		
+total1, total2 = potlist2
+mild, crit, recovv, deathh = potlist3
+int_total1, int_total2, int_mild, int_crit, int_recovv, int_deathh = int_set
+	
+mild_per = (int_mild/int_total1) * 100
+crit_per = (int_crit/int_total1) * 100
+	
+recovv_per = (int_recovv/int_total2) * 100
+desthh_per = (int_deathh/int_total2) * 100
+	
+cvddsv.writerow([f'{date} - {time}', total1, mild, f'{mild_per}%', crit, f'{crit_per}%', total2, recovv, f'{recovv_per}%', deathh, f'{deathh_per}%'])	
 	
 	
 
@@ -47,7 +79,8 @@ with open('covid-19_deatiled.csv', 'w') as cvdd:
 
 	
 		
-
+cvd.close()
+cvdd.close()
 
 
 
