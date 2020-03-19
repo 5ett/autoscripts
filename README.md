@@ -12,3 +12,8 @@ you would have to replace all destination directories for the different file typ
 
 
 small steps.
+
+• For Covfork.py
+
+Another simple script to scrape stats on the novel coronavirus covid-19 and calculating percentage increases, predict increase and decrease rates.
+Currently being edited and adjusted for smooth running!
