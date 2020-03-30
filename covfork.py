@@ -21,7 +21,7 @@ counters = parsed_data.find('div', class_='content-inner')
 int_set = []
 pot_percent = []
 #increase 
-nd_nr = []
+new_death_recov = []
 leapt = []
 total_perc = []
 
@@ -47,25 +47,26 @@ else:
 	cvddsv.writerow(['DATE','TOTAL', 'MILD CASES','%', 'CRITICAL CASES','%','TOTAL', 'RECOVERIES', '%', 'DEATHS', '%'])
 
 
-leap_fwd = []
-leap_pcnt = []
-content = []
+csv_content = [] #list of retrieved string numbers for 'intification'
 
+#convert retrieved string to an integer
 def intfy( numb, listval):
     hund, thou = numb.split(',')
-    res_int = int(hund + thou)
-    listval.append(res_int)
+    result_int = int(hund + thou)
+    listval.append(result_int)
 
+#list value = the list to append calculated increases
+#desig = the Column heading to retrieve from csv
 def leap(newtotal, listval, desig):
     c = open('covid-19_total.csv')
     reader = csv.DictReader(c)
     for row in reader:
-        content.append(row[desig])
-    if len(content) > 0:
-        oldtotal = content[-1].strip('\n')
-        oldtotall = oldtotal.split(' ')
-        if len(oldtotall) > 1:
-            odl, _ = oldtotall
+        csv_content.append(row[desig])
+    if len(csv_content) > 0:
+        oldtotal = csv_content[-1].strip('\n')
+        oldtotal_1 = oldtotal.split(' ')
+        if len(oldtotal_1) > 1:
+            odl, _ = oldtotal_1
             hund, thou = odl.split(',')
             odl = hund + thou
             old = int(odl)
@@ -78,11 +79,11 @@ def leap(newtotal, listval, desig):
         new_str = hund_ + thou_
         new = int(new_str)
 
-        leapfwd = new - old
-        leappcnt = ((leapfwd/ old) * 100)
-        leappcnt = round(leappcnt, 2)
-        listval.append(leapfwd)
-        listval.append(leappcnt)
+        leap_fwd = new - old
+        leap_percent = ((leap_fwd/ old) * 100)
+        leap_percent = round(leap_percent, 2)
+        listval.append(leap_fwd)
+        listval.append(leap_percent)
     else:
         listval.append(0)
         listval.append(0)    
@@ -94,25 +95,25 @@ for pot in counters.find_all('div', class_='maincounter-number'):
 total, death, recov = potlist
 
 leap(total, leapt, 'TOTAL CASES')
-leap(death, nd_nr, 'DEATH')
-leap(recov, nd_nr, 'RECOVERIES')
+leap(death, new_death_recov, 'DEATH')
+leap(recov, new_death_recov, 'RECOVERIES')
 
-new_cases, new_caseperc = leapt
-nd, nd_perc, nr, nr_perc = nd_nr
+new_cases, new_cases_pcnt = leapt
+new_deaths, new_deaths_percent, new_recoveries, new_recoveries_pcnt = new_death_recov
 
 intfy(death, total_perc)
 intfy(recov, total_perc)
 
-death_int, recov_int = total_perc
-nrnd_total = death_int + recov_int
-death_per = (death_int/nrnd_total) * 100
-death_per = round(death_per, 2)
-recov_Per = (recov_int/nrnd_total) * 100
-recov_Per = round(recov_Per, 2)
+death_int, recovery_int = total_perc
+total_death_recovery = death_int + recovery_int
+death_percent = (death_int/total_death_recovery) * 100
+death_percent = round(death_percent, 2)
+recovery_percent = (recovery_int/total_death_recovery) * 100
+recovery_percent = round(recovery_percent, 2)
 
 
 cvdsv.writerow([ 
-	f'{date} - {time}', total, f'+{new_cases} ({new_caseperc}%)', f'{death} ({death_per}%)', f'+{nd} ({nd_perc}%)', f'{recov} ({recov_Per}%)', f'+{nr} ({nr_perc}%)'
+	f'{date} - {time}', total, f'+ {new_cases} ({new_cases_pcnt}%)', f'{death} ({death_percent}%)', f'+ {new_deaths} ({new_deaths_percent}%)', f'{recov} ({recovery_percent}%)', f'+ {new_recoveries} ({new_recoveries_pcnt}%)'
 	])
 		
 
@@ -131,16 +132,16 @@ for pot3 in counters.find_all('span', class_='number-table'):
 
 
 total1, total2 = potlist2
-mild, crit, recovv, deathh = potlist3
-int_total1, int_total2, int_mild, int_crit, int_recovv, int_deathh = int_set
+mild, critical, recovv, deathh = potlist3
+int_total1, int_total2, int_mild, int_critical, int_recovv, int_deathh = int_set
 	
-mild_per = (int_mild/int_total1) * 100
-crit_per = (int_crit/int_total1) * 100
+mild_percent = (int_mild/int_total1) * 100
+critical_percent = (int_critical/int_total1) * 100
 	
-recovv_per = (int_recovv/int_total2) * 100
-deathh_per = (int_deathh/int_total2) * 100
+recovery_percent_2 = (int_recovv/int_total2) * 100
+death_percent_2 = (int_deathh/int_total2) * 100
 	
-cvddsv.writerow([f'{date} - {time}', total1, mild, f'{mild_per}%', crit, f'{crit_per}%', total2, recovv, f'{recovv_per}%', deathh, f'{deathh_per}%'])	
+cvddsv.writerow([f'{date} - {time}', total1, mild, f'{mild_percent}%', critical, f'{critical_percent}%', total2, recovv, f'{recovery_percent_2}%', deathh, f'{death_percent_2}%'])	
 	
 	
 
