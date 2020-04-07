@@ -56,9 +56,9 @@ csv_content = []  # list of retrieved string numbers for 'intification'
 
 
 def intfy(numb, listval):
-    hund, thou = numb.split(',')
-    result_int = int(hund + thou)
-    listval.append(result_int)
+	numb = int(numb.replace(',' , ''))
+	listval.append(numb)
+    
 
 # list value = the list to append calculated increases
 # desig = the Column heading to retrieve from csv
@@ -74,30 +74,12 @@ def leap(newtotal, listval, desig):
         oldtotal_1 = oldtotal.split(' ')
         if len(oldtotal_1) > 1:
             odl, _ = oldtotal_1
-            strp_oldtotal = odl.split(',')
-            if len(strp_oldtotal) < 3:
-                thousand, hundred = strp_oldtotal
-                odl = thousand + hundred
-                old = int(odl)
-            else:
-                mill, thousand, hundred = strp_oldtotal
-                odl = mill + thousand + hundred
-                old = int(odl)
+            old = int(odl.replace(',' , ''))
         else:
-            thousand, hundred = oldtotal.split(',')
-            old_str = thousand + hundred
-            old = int(old_str)
-
-        strp_newtotal = newtotal.split(',')
-        if len(strp_newtotal) < 3:
-            thousand_, hundred_ = strp_newtotal
-            new_str = thousand_ + hundred_
-            new = int(new_str)
-        else:
-            mill_, thousand_, hundred_ = strp_newtotal
-            new_str = mill_ + thousand_ + hundred_
-            new = int(new_str)
-
+        	old = int(oldtotal.replace(',', ''))
+        
+        new = int(newtotal.replace(',', ''))
+                    
         leap_fwd = new - old
         leap_percent = ((leap_fwd / old) * 100)
         leap_percent = round(leap_percent, 2)
