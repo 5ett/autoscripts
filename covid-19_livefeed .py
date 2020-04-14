@@ -13,6 +13,16 @@ worldwide = "https://corona-virus-stats.herokuapp.com/api/v1/cases/general-stats
 payload = {}
 headers = {}
 
+def recheckk():
+	recheck = input(colored("\nCheck another country? (Y/N) ", 'yellow'))
+	if recheck == 'Y':
+		checker()
+	elif recheck == 'N':
+		pass
+	else:
+		print(colored("make sure your reply was either 'Y' or 'N'"))
+		recheckk()
+
 def checker():
 	country = input(colored("Choose Country: ", 'green'))
 	country_data = f"https://covidapi.info/api/v1/country/{country}/latest"
@@ -55,11 +65,8 @@ def checker():
 		print(colored(f'\tRecorded Deaths: {country_deaths:,}', 'red'))
 	else:
 		checker()
-	recheck = input(colored("\nCheck another country? (Y/N) ", 'yellow'))
-	if recheck == 'Y':
-		checker()
-	else:
-		pass
+	
+	recheckk()
 
 print(colored('**Note\n \tuse ISO3 country codes like...', 'red'))
 print(colored('\tITA - Italy\n \tGHA - Ghana\n \tFRA - France\n \tIND - India\n \t...etc', 'red'))
