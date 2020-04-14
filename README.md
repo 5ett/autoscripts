@@ -17,3 +17,9 @@ small steps.
 
 Another simple script to scrape stats on the novel coronavirus covid-19 and calculating percentage increases, predict increase and decrease rates.
 Currently being edited and adjusted for smooth running!
+
+• For  Covid-19 Livefeed 
+
+This returns stats for specific countries through the CovidAPI directly in the terminal.
+Take note of the ISO3 country codes required for requests to collect the country specific data
+you want. You can check for unlimited countries as long as you have the correct ISO3 code.
