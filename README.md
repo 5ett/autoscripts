@@ -16,7 +16,7 @@ small steps.
 • For Covfork.py
 
 Another simple script to scrape stats on the novel coronavirus covid-19 and calculating percentage increases, predict increase and decrease rates.
-Currently being edited and adjusted for smooth running!
+The data recorded so far has been added to the covfork collected data folder.
 
 • For  Covid-19 Livefeed 
 
