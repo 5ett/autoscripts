@@ -1,4 +1,5 @@
-# myphonescripts
+# mobile scripts
+s
 mostly scripts to automate certain "pain in the neck" tasks
 oh and since they're small scripts, I write them onnthe go with my phone
 The boring explanations of the mucky code i put in this repository
