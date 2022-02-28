@@ -77,7 +77,7 @@ def leap(newtotal, listval, desig):
             old = int(odl.replace(',' , ''))
         else:
         	old = int(oldtotal.replace(',', ''))
-        
+            
         new = int(newtotal.replace(',', ''))
                     
         leap_fwd = new - old
