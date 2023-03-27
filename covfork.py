@@ -55,9 +55,10 @@ csv_content = []  # list of retrieved string numbers for 'intification'
 # convert retrieved string to an integer
 
 
-def intfy(numb, listval):
-	numb = int(numb.replace(',' , ''))
-	listval.append(numb)
+def intfy(number, listval):
+    print(number)
+    number = int(number.replace(',' , ''))
+    listval.append(number)
     
 
 # list value = the list to append calculated increases
@@ -75,11 +76,11 @@ def leap(newtotal, listval, desig):
         if len(oldtotal_1) > 1:
             odl, _ = oldtotal_1
             old = int(odl.replace(',' , ''))
+            print(old)
         else:
-        	old = int(oldtotal.replace(',', ''))
+            old = int(oldtotal.replace(',', ''))
             
-        new = int(newtotal.replace(',', ''))
-                    
+        new = int(newtotal.replace(',', ''))            
         leap_fwd = new - old
         leap_percent = ((leap_fwd / old) * 100)
         leap_percent = round(leap_percent, 2)
@@ -143,7 +144,7 @@ recovery_percent_2 = (int_recovv / int_total2) * 100
 death_percent_2 = (int_deathh / int_total2) * 100
 
 cvddsv.writerow([f'{date} - {time}', total1, mild, f'{mild_percent}%', critical,
-                 f'{critical_percent}%', total2, recovv, f'{recovery_percent_2}%', deathh, f'{death_percent_2}%'])
+    f'{critical_percent}%', total2, recovv, f'{recovery_percent_2}%', deathh, f'{death_percent_2}%'])
 
 
 print('done!')
@@ -153,6 +154,6 @@ cvd.close()
 cvdd.close()
 
 
-# print(potlist)
-# print (potlist2)
-# print (potlist3)
+print(potlist)
+print (potlist2)
+print (potlist3)
